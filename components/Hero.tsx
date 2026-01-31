@@ -106,7 +106,6 @@ export default function Hero() {
               initial={{ opacity: 0, y: 50 }}
               animate={{ 
                 opacity: 1, 
-                y: 0,
                 y: [0, -10, 0],
               }}
               transition={{ 
