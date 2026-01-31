@@ -6,8 +6,9 @@ import CTA from '@/components/CTA'
 import { getCountryByCode } from '@/lib/countries'
 import type { Metadata } from 'next'
 
-export async function generateMetadata({ params }: { params: { country: string } }): Promise<Metadata> {
-  const country = getCountryByCode(params.country)
+export async function generateMetadata({ params }: { params: Promise<{ country: string }> }): Promise<Metadata> {
+  const { country: countryCode } = await params
+  const country = getCountryByCode(countryCode)
   const countryName = country?.name || 'Global'
   
   return {
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: { params: { country: string }
   }
 }
 
-export default function Home({ params }: { params: { country: string } }) {
+export default async function Home({ params }: { params: Promise<{ country: string }> }) {
   return (
     <div className="flex flex-col">
       <Hero />

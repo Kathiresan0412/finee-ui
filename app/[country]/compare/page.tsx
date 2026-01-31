@@ -2,8 +2,9 @@ import { Metadata } from 'next'
 import CompareProducts from '@/components/CompareProducts'
 import { getCountryByCode } from '@/lib/countries'
 
-export async function generateMetadata({ params }: { params: { country: string } }): Promise<Metadata> {
-  const country = getCountryByCode(params.country)
+export async function generateMetadata({ params }: { params: Promise<{ country: string }> }): Promise<Metadata> {
+  const { country: countryCode } = await params
+  const country = getCountryByCode(countryCode)
   const countryName = country?.name || 'Global'
   
   return {

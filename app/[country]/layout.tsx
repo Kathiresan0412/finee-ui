@@ -8,8 +8,9 @@ import { notFound } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export async function generateMetadata({ params }: { params: { country: string } }): Promise<Metadata> {
-  const country = getCountryByCode(params.country)
+export async function generateMetadata({ params }: { params: Promise<{ country: string }> }): Promise<Metadata> {
+  const { country: countryCode } = await params
+  const country = getCountryByCode(countryCode)
   const countryName = country?.name || 'Global'
   
   return {
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: { params: { country: string }
     openGraph: {
       type: 'website',
       locale: 'en_US',
-      url: `/${params.country}`,
+      url: `/${countryCode}`,
       siteName: 'Finee',
       title: `Finee - Compare Everything in ${countryName}`,
       description: `Compare everything in ${countryName} - smartphones, TVs, laptops, and much more.`,
@@ -64,14 +65,15 @@ export async function generateMetadata({ params }: { params: { country: string }
   }
 }
 
-export default function CountryLayout({
+export default async function CountryLayout({
   children,
   params,
 }: {
   children: React.ReactNode
-  params: { country: string }
+  params: Promise<{ country: string }>
 }) {
-  const countryCode = params.country?.toLowerCase() || defaultCountry
+  const { country } = await params
+  const countryCode = country?.toLowerCase() || defaultCountry
   
   // Validate country code
   if (!isValidCountryCode(countryCode)) {

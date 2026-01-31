@@ -3,16 +3,16 @@ import ProductDetail from '@/components/ProductDetail'
 import { getCountryByCode } from '@/lib/countries'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     country: string
     id: string
-  }
+  }>
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const country = getCountryByCode(params.country)
+  const { country: countryCode, id: productId } = await params
+  const country = getCountryByCode(countryCode)
   const countryName = country?.name || 'Global'
-  const productId = params.id
   
   return {
     title: `Product ${productId} - ${countryName}`,
@@ -25,5 +25,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ProductPage({ params }: PageProps) {
-  return <ProductDetail productId={params.id} />
+  const { id } = await params
+  return <ProductDetail productId={id} />
 }
