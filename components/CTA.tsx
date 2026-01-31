@@ -2,8 +2,11 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { useCountry } from '@/hooks/useCountry'
 
 export default function CTA() {
+  const country = useCountry()
+  
   return (
     <section className="py-20 bg-gradient-to-r from-primary-600 to-purple-600 text-white">
       <div className="container mx-auto px-4 text-center">
@@ -34,7 +37,7 @@ export default function CTA() {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           <Link
-            href="/products"
+            href={`/${country}/products`}
             className="inline-block px-8 py-4 bg-white text-primary-600 rounded-lg font-semibold text-lg hover:bg-gray-100 transition transform hover:scale-105 shadow-lg"
           >
             Get Started Now

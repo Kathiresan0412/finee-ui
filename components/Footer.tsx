@@ -1,6 +1,11 @@
+'use client'
+
 import Link from 'next/link'
+import { useCountry } from '@/hooks/useCountry'
 
 export default function Footer() {
+  const country = useCountry()
+  
   return (
     <footer className="bg-gray-900 text-white mt-20">
       <div className="container mx-auto px-4 py-12">
@@ -16,13 +21,13 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-gray-400">
               <li>
-                <Link href="/" className="hover:text-white transition">Home</Link>
+                <Link href={`/${country}`} className="hover:text-white transition">Home</Link>
               </li>
               <li>
-                <Link href="/products" className="hover:text-white transition">Products</Link>
+                <Link href={`/${country}/products`} className="hover:text-white transition">Products</Link>
               </li>
               <li>
-                <Link href="/compare" className="hover:text-white transition">Compare</Link>
+                <Link href={`/${country}/compare`} className="hover:text-white transition">Compare</Link>
               </li>
             </ul>
           </div>

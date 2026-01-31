@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import axios from 'axios'
 import Link from 'next/link'
+import { useCountry } from '@/hooks/useCountry'
 
 interface Product {
   id: string
@@ -29,6 +30,7 @@ export default function ProductDetail({ productId }: { productId: string }) {
   const [product, setProduct] = useState<Product | null>(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
+  const country = useCountry()
 
   useEffect(() => {
     fetchProduct()
@@ -162,7 +164,7 @@ export default function ProductDetail({ productId }: { productId: string }) {
           </div>
 
           <Link
-            href={`/compare?add=${product.id}`}
+            href={`/${country}/compare?add=${product.id}`}
             className="block w-full text-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition font-semibold"
           >
             Add to Comparison

@@ -2,8 +2,11 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { useCountry } from '@/hooks/useCountry'
 
 export default function Hero() {
+  const country = useCountry()
+  
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-primary-100 overflow-hidden">
       {/* Animated background elements */}
@@ -55,11 +58,11 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent"
+            className="text-6xl md:text-8xl font-bold mb-6 text-gray-900"
           >
-            Compare Products
+            Compare
             <br />
-            <span className="text-gray-800">Find the Best Deals</span>
+            <span className="bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">everything</span>
           </motion.h1>
           
           <motion.p
@@ -68,8 +71,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto"
           >
-            Compare products from Amazon, eBay, and other retailers. 
-            Make informed decisions and save money.
+            smartphones, TVs, laptops, and much more
           </motion.p>
           
           <motion.div
@@ -79,13 +81,13 @@ export default function Hero() {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Link
-              href="/products"
+              href={`/${country}/products`}
               className="px-8 py-4 bg-primary-600 text-white rounded-lg font-semibold text-lg hover:bg-primary-700 transition transform hover:scale-105 shadow-lg"
             >
               Browse Products
             </Link>
             <Link
-              href="/compare"
+              href={`/${country}/compare`}
               className="px-8 py-4 bg-white text-primary-600 rounded-lg font-semibold text-lg hover:bg-gray-50 transition transform hover:scale-105 shadow-lg border-2 border-primary-600"
             >
               Start Comparing
